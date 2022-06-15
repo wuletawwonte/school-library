@@ -19,22 +19,28 @@ def show_menu
   action(gets.chomp)
 end
 
+def list_books
+  $my_books.each_with_index { |x, index| 
+    puts "#{index}) Title: \"#{x.title}\", Author: #{x.author} " 
+  }
+end
+
+def list_people
+  $people.each_with_index { |x, index|
+    print "\n#{index}) [#{x.class.name}] Name: #{x.name}, ID: #{x.id}, Age: #{x.age}"
+  }
+end
+
+
 def action(choice)
   case choice
   when "1"
-    $my_books.each { |x| 
-      print "\nTitle: " 
-      puts x.title 
-      print "Author: "
-      puts x.author      
-    }
+    list_books
     puts "Press enter to continue ..."
     gets.chomp
     show_menu()
   when "2"
-    $people.each_with_index { |x, index|
-      print "\n#{index}) [#{x.class.name}] Name: #{x.name}, ID: #{x.id}, Age: #{x.age}"
-    }
+    list_people
     puts "\n\nPress any key to continue"
     gets
     show_menu
@@ -68,13 +74,13 @@ def action(choice)
     gets
     show_menu
   when "4"
-    print "title: "
+    print "Title: "
     title = gets.chomp
     print "Author: "
     author = gets.chomp
     new_book = Book.new(title, author)
     $my_books.push(new_book)
-    main()
+    show_menu
   when "7"
     puts "Bye ..."
     exit
