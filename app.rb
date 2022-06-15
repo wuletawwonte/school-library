@@ -75,12 +75,8 @@ class App
 
   def my_permission(my_char)
     case my_char
-    when 'n'
-      false
     when 'N'
       false
-    when 'y'
-      true
     when 'Y'
       true
     end
