@@ -27,7 +27,7 @@ end
 
 def list_people
   $people.each_with_index { |x, index|
-    print "\n#{index}) [#{x.class.name}] Name: #{x.name}, ID: #{x.id}, Age: #{x.age}"
+    puts "#{index}) [#{x.class.name}] Name: #{x.name}, ID: #{x.id}, Age: #{x.age}"
   }
 end
 
@@ -81,6 +81,16 @@ def action(choice)
     new_book = Book.new(title, author)
     $my_books.push(new_book)
     show_menu
+  when "5"
+    puts "\nSelect a book from the following list by number"
+    list_books
+    book_index = gets.chomp
+    puts "\nSelect a book from the following list by number"
+    list_people
+    person_index = gets.chomp
+    print "\n Date: "
+    rental_date = gets.chomp
+
   when "7"
     puts "Bye ..."
     exit
