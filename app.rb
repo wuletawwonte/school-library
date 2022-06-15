@@ -39,7 +39,7 @@ class App
       create_rental
     when '6'
       list_rental
-    when '7'
+    else
       puts 'Thanks for using this app ...'
       exit
     end
