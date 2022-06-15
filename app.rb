@@ -76,7 +76,8 @@ class App
     my_permission = true
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     person_type = gets.chomp
-    if person_type == '1'
+    case person_type
+    when '1'
       print 'Age: '
       age = gets.chomp
       print 'Name: '
@@ -86,7 +87,7 @@ class App
       my_permission = false if permission == 'n' || permission == 'N'
       student = Student.new(age, name, my_permission, nil)
       @people.push(student)
-    elsif person_type == '2'
+    when '2'
       print 'Age: '
       age = gets.chomp
       print 'Name: '
