@@ -21,10 +21,11 @@ class App
     puts '5 - Create a rental'
     puts '6 - List all rentals for a given person id'
     puts "7 - Exit\n\n"
-    action(gets.chomp)
+    gets.chomp
   end
 
-  def action(choice)
+  def run
+    choice = show_menu
     case choice
     when '1'
       action_list_books
@@ -62,44 +63,63 @@ class App
     list_books
     puts 'Press enter to continue ...'
     gets.chomp
-    show_menu
+    run
   end
 
   def action_list_people
     list_people
     puts "\n\nPress any key to continue"
     gets
-    show_menu
+    run
+  end
+
+  def my_permission(my_char)
+    case my_char
+    when 'n'
+      false
+    when 'N'
+      false
+    when 'y'
+      true
+    when 'Y'
+      true
+    end
+  end
+
+  def create_teacher
+    print 'Age: '
+    age = gets.chomp
+    print 'Name: '
+    name = gets.chomp
+    print 'Specialization: '
+    specialization = gets.chomp
+    teacher = Teacher.new(age, name, nil, specialization)
+    @people.push(teacher)
+  end
+
+  def create_student
+    print 'Age: '
+    age = gets.chomp
+    print 'Name: '
+    name = gets.chomp
+    print 'Has parent permission? [Y/N]: '
+    permission = gets.chomp
+    student = Student.new(age, name, my_permission(permission), nil)
+    @people.push(student)
   end
 
   def create_person
-    my_permission = true
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     person_type = gets.chomp
     case person_type
     when '1'
-      print 'Age: '
-      age = gets.chomp
-      print 'Name: '
-      name = gets.chomp
-      print 'Has parent permission? [Y/N]: '
-      permission = gets.chomp
-      my_permission = false if permission == 'n' || permission == 'N'
-      student = Student.new(age, name, my_permission, nil)
-      @people.push(student)
+      create_student
     when '2'
-      print 'Age: '
-      age = gets.chomp
-      print 'Name: '
-      name = gets.chomp
-      print 'Specialization: '
-      specialization = gets.chomp
-      teacher = Teacher.new(age, name, nil, specialization)
-      @people.push(teacher)
+      create_teacher
     end
     puts "Person created successfully\n"
     gets
-    show_menu
+    run
   end
 
   def create_book
@@ -109,7 +129,7 @@ class App
     author = gets.chomp
     new_book = Book.new(title, author)
     @my_books.push(new_book)
-    show_menu
+    run
   end
 
   def create_rental
@@ -124,7 +144,7 @@ class App
     new_rental = Rental.new(rental_date, @my_books[book_index.to_i], @people[person_index.to_i])
     @my_rentals.push(new_rental)
     puts 'Rental added successfully'
-    show_menu
+    run
   end
 
   def list_rental
@@ -137,6 +157,6 @@ class App
     x.rentals.each do |x|
       puts x.date
     end
-    show_menu
+    run
   end
 end
