@@ -42,8 +42,6 @@ class App
     when '7'
       puts 'Thanks for using this app ...'
       exit
-    else
-      puts 'You chose something else'
     end
   end
 
