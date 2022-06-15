@@ -4,13 +4,14 @@ require './student'
 require './teacher'
 
 $my_books = []
+$people = []
 
 def show_menu 
   puts "Welcome to School Library App!\n\n"
   puts "Please choose an option by entering a number:"
   puts "1 - List all books" 
   puts "2 - List all people" 
-  puts "3 - Create a people" 
+  puts "3 - Create a person" 
   puts "4 - Create a book" 
   puts "5 - Create a rental" 
   puts "6 - List all rentals for a given person id" 
@@ -31,9 +32,44 @@ def action(choice)
     gets.chomp
     show_menu()
   when "2"
-    puts "You chose 2"
+    $people.each { |x| 
+      print "\nName: "
+      puts x.name
+      print "Age: "
+      puts x.age      
+    }
+    puts "\n Press any key to continue"
+    gets
+    show_menu
   when "3"
-    puts "You chose 3"
+    my_permission = true;
+    print "Do you want to create a student (1) or a teacher (2)? [Input the number]: "
+    person_type = gets.chomp    
+    if(person_type == "1")
+      print "Age: "
+      age = gets.chomp
+      print "Name: "
+      name = gets.chomp
+      print "Has parent permission? [Y/N]: "
+      permission = gets.chomp
+      if permission == "n" || permission == "N"
+        my_permission = false
+      end
+      student = Student.new(age, name, my_permission, nil)
+      $people.push(student)
+    elsif (person_type == "2")
+      print "Age: "
+      age = gets.chomp
+      print "Name: "
+      name = gets.chomp
+      print "Specialization: "
+      specialization = gets.chomp
+      teacher = Teacher.new(age, name, nil, specialization)
+      $people.push(teacher)
+    end
+    puts "Person created successfully\n"
+    gets
+    show_menu
   when "4"
     print "title: "
     title = gets.chomp
@@ -43,7 +79,8 @@ def action(choice)
     $my_books.push(new_book)
     main()
   when "7"
-    "Bye ..."
+    puts "Bye ..."
+    exit
   else
     puts "You chose something else"
   end
