@@ -32,13 +32,10 @@ def action(choice)
     gets.chomp
     show_menu()
   when "2"
-    $people.each { |x| 
-      print "\nName: "
-      puts x.name
-      print "Age: "
-      puts x.age      
+    $people.each_with_index { |x, index|
+      print "\n#{index}) [#{x.class.name}] Name: #{x.name}, ID: #{x.id}, Age: #{x.age}"
     }
-    puts "\n Press any key to continue"
+    puts "\n\nPress any key to continue"
     gets
     show_menu
   when "3"
