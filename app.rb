@@ -131,7 +131,7 @@ class App
     print "\nID of person: "
     person_id = gets.chomp
     @people.each do |x|
-      me = x if x.id === person_id.to_i
+      me = x if x.id == person_id.to_i
     end
     x.rentals.each do |x|
       puts x.date
