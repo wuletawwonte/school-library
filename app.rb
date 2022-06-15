@@ -5,7 +5,6 @@ require './teacher'
 require './rental'
 
 class App
-
   def initialize
     @my_books = []
     @my_rentals = []
@@ -14,54 +13,56 @@ class App
 
   def show_menu
     puts "Welcome to School Library App!\n\n"
-    puts "Please choose an option by entering a number:"
-    puts "1 - List all books" 
-    puts "2 - List all people" 
-    puts "3 - Create a person" 
-    puts "4 - Create a book" 
-    puts "5 - Create a rental" 
-    puts "6 - List all rentals for a given person id" 
-    puts "7 - Exit\n\n" 
+    puts 'Please choose an option by entering a number:'
+    puts '1 - List all books'
+    puts '2 - List all people'
+    puts '3 - Create a person'
+    puts '4 - Create a book'
+    puts '5 - Create a rental'
+    puts '6 - List all rentals for a given person id'
+    puts "7 - Exit\n\n"
     action(gets.chomp)
   end
 
   def action(choice)
     case choice
-    when "1"
+    when '1'
       action_list_books
-    when "2"
+    when '2'
       action_list_people
-    when "3"
+    when '3'
       create_person
-    when "4"
+    when '4'
       create_book
-    when "5"
+    when '5'
       create_rental
-    when "7"
-      puts "Bye ..."
+    when '6'
+      list_rental
+    when '7'
+      puts 'Thanks for using this app ...'
       exit
     else
-      puts "You chose something else"
+      puts 'You chose something else'
     end
   end
 
   def list_books
-    @my_books.each_with_index { |x, index| 
-      puts "#{index}) Title: \"#{x.title}\", Author: #{x.author} " 
-    }
+    @my_books.each_with_index do |x, index|
+      puts "#{index}) Title: \"#{x.title}\", Author: #{x.author} "
+    end
   end
 
   def list_people
-    @people.each_with_index { |x, index|
+    @people.each_with_index do |x, index|
       puts "#{index}) [#{x.class.name}] Name: #{x.name}, ID: #{x.id}, Age: #{x.age}"
-    }
+    end
   end
 
   def action_list_books
     list_books
-    puts "Press enter to continue ..."
+    puts 'Press enter to continue ...'
     gets.chomp
-    show_menu()
+    show_menu
   end
 
   def action_list_people
@@ -71,28 +72,26 @@ class App
     show_menu
   end
 
-  def create_person 
-    my_permission = true;
-    print "Do you want to create a student (1) or a teacher (2)? [Input the number]: "
-    person_type = gets.chomp    
-    if(person_type == "1")
-      print "Age: "
+  def create_person
+    my_permission = true
+    print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+    person_type = gets.chomp
+    if person_type == '1'
+      print 'Age: '
       age = gets.chomp
-      print "Name: "
+      print 'Name: '
       name = gets.chomp
-      print "Has parent permission? [Y/N]: "
+      print 'Has parent permission? [Y/N]: '
       permission = gets.chomp
-      if permission == "n" || permission == "N"
-        my_permission = false
-      end
+      my_permission = false if permission == 'n' || permission == 'N'
       student = Student.new(age, name, my_permission, nil)
       @people.push(student)
-    elsif (person_type == "2")
-      print "Age: "
+    elsif person_type == '2'
+      print 'Age: '
       age = gets.chomp
-      print "Name: "
+      print 'Name: '
       name = gets.chomp
-      print "Specialization: "
+      print 'Specialization: '
       specialization = gets.chomp
       teacher = Teacher.new(age, name, nil, specialization)
       @people.push(teacher)
@@ -103,9 +102,9 @@ class App
   end
 
   def create_book
-    print "Title: "
+    print 'Title: '
     title = gets.chomp
-    print "Author: "
+    print 'Author: '
     author = gets.chomp
     new_book = Book.new(title, author)
     @my_books.push(new_book)
@@ -123,8 +122,20 @@ class App
     rental_date = gets.chomp
     new_rental = Rental.new(rental_date, @my_books[book_index.to_i], @people[person_index.to_i])
     @my_rentals.push(new_rental)
-    puts "Rental added successfully"
+    puts 'Rental added successfully'
     show_menu
   end
 
+  def list_rental
+    me = nil
+    print "\nID of person: "
+    person_id = gets.chomp
+    @people.each do |x|
+      me = x if x.id === person_id.to_i
+    end
+    x.rentals.each do |x|
+      puts x.date
+    end
+    show_menu
+  end
 end
