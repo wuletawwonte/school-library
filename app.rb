@@ -148,9 +148,10 @@ class App
     @people.each do |x|
       me = x if x.id == person_id.to_i
     end
-    x.rentals.each do |x|
+    me.rentals.each do |x|
       puts x.date
     end
+    puts
     run
   end
 end
