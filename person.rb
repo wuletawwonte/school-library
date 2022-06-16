@@ -2,6 +2,8 @@ class Person
   attr_reader :id, :rentals
   attr_accessor :name, :age
 
+  # rubocop:disable
+  
   def initialize(age, name = 'Unknown', parent_permission = true)
     super()
     @id = Random.rand(1..1000)
@@ -10,6 +12,8 @@ class Person
     @parent_permission = parent_permission
     @rentals = []
   end
+
+  # rubocop:enable
 
   def can_use_services
     if of_age || @parent_permission
