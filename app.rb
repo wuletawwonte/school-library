@@ -106,9 +106,9 @@ class App
     print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     person_type = gets.chomp
     case person_type
-    when '1'
+    when 1
       create_student
-    when '2'
+    when 2
       create_teacher
     end
     puts "Person created successfully\n"
